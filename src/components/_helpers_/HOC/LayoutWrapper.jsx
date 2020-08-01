@@ -250,11 +250,11 @@ export default function Layout(ChildComponent) {
           >
             <ChildComponent />
           </MainContainer>
-          {/* <FooterContainer
+          <FooterContainer
             style={showSideBar ? { marginLeft: "20%" } : null}
           >
             <Footer />
-          </FooterContainer> */}
+          </FooterContainer>
         </div>
       );
     }
