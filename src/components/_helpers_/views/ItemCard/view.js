@@ -6,7 +6,8 @@ export const StyledCard = styled.div`
     font-family: ${(props) => props.theme.fontFamily};
     box-shadow: ${(props) => props.theme.card.boxShadow};
     transition: 0.3s;
-    width: 20%;
+    width: 100%;
+    height: 50%;
     color: ${(props) => props.theme.card.color};
     cursor: pointer;
     &:hover {
@@ -16,25 +17,32 @@ export const StyledCard = styled.div`
     }
 `;
 
+export const StyledDesc = styled.div`
+    background-color: #e6e1e1;
+`;
+
 export const StyledName = styled.h3`
     padding: 1px 6px;
     margin: 5px 0px;
-    text-align: center;
 `;
 
 export const StyledCategory = styled.h5`
+    padding: 1px 6px;
     margin: 6px 0px;
-    text-align: center;
+`;
+
+export const StyledStatement = styled.h6`
+    padding: 1px 6px;
+    margin: 6px 0px;
 `;
 
 export const StyledPrice = styled.h3`
     padding: 5px 0px 16px 0px;
     margin: 3px 0px;
-    text-align: center;
 `;
 
 export const StyledImg = styled.img`
-    width: 100%;
+    height: 200px;
 `;
 
 StyledCard.defaultProps = {

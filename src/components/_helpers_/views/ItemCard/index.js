@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
-import { StyledCard, StyledName, StyledCategory, StyledPrice, StyledImg } from './view';
+import { StyledCard, StyledName, StyledCategory, StyledPrice, StyledImg, StyledDesc, StyledStatement } from './view';
 
 class ItemCard extends Component {
     constructor(props) {
@@ -10,8 +10,14 @@ class ItemCard extends Component {
             imageUrl: this.props.imageUrl,
             itemName: this.props.itemName,
             itemCategory: this.props.itemCategory,
+            itemDesc: this.props.itemDesc,
             itemPrice: this.props.itemPrice
         }
+    }
+
+    handleClick = () => {
+        const { id, cardClickHandler } = this.props;
+        cardClickHandler(id);
     }
 
     render() {
@@ -19,15 +25,19 @@ class ItemCard extends Component {
             imageUrl,
             itemName,
             itemCategory,
+            itemDesc,
             itemPrice
         } = this.state;
         return (
             <div>
-                <StyledCard>
-                    <StyledImg src={imageUrl} alt={itemName} ></StyledImg>
-                    <StyledName>{itemName}</StyledName>
-                    <StyledCategory>{itemCategory}</StyledCategory>
-                    <StyledPrice>{`Rs. ${itemPrice}`}</StyledPrice>
+                <StyledCard className="d-md-flex" onClick={this.handleClick}>
+                    <StyledImg src={imageUrl} alt={itemName} className="col-md-3 p-0"></StyledImg>
+                    <StyledDesc className="col-md-9">
+                        <StyledName className="mt-md-3">{itemName}</StyledName>
+                        <StyledCategory className="mt-3">{itemCategory}</StyledCategory>
+                        <StyledStatement className="mt-3">{itemDesc}</StyledStatement>
+                        <StyledPrice>{itemPrice ? `Rs. ${itemPrice}` : ''}</StyledPrice>
+                    </StyledDesc>
                 </StyledCard>
             </div>
         )
@@ -35,10 +45,13 @@ class ItemCard extends Component {
 }
 
 ItemCard.defaultProps = {
-    id: '',
+    id: '1',
+    itemName: 'Mock Item Name',
+    itemCategory: 'Mock Item Category',
+    itemDesc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis officia quidem, dolores incidunt ducimus, vel repudiandae excepturi molestiae, expedita eos fugiat ut eaque repellendus ipsum.',
     name: 'item-card',
-    imageUrl: 'https://www.w3schools.com/howto/img_avatar.png',
-    onClick: () => {}
+    imageUrl: 'https://www.alimed.com/_resources/cache/images/product/98FCP47-1_1000x1000-pad.jpg',
+    cardClickHandler: () => {}
 }
 
 ItemCard.propTypes = {
@@ -47,10 +60,11 @@ ItemCard.propTypes = {
     imageUrl: PropTypes.string,
     itemName: PropTypes.string,
     itemCategory: PropTypes.string,
+    itemDesc: PropTypes.string,
     itemPrice: PropTypes.string,
     disabled: PropTypes.bool,
     theme: PropTypes.shape(),
-    onChange: PropTypes.func
+    cardClickHandler: PropTypes.func
 }
 
 export default ItemCard

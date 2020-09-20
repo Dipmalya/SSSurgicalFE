@@ -5,7 +5,7 @@ import styled from 'styled-components';
 class Carousel extends Component {
     render() {
         return (
-            <div id="carouselExampleIndicators" className="carousel slide zIndex-1" data-ride="carousel">
+            <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
                 <ol className="carousel-indicators">
                     <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
                     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>

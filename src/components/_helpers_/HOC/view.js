@@ -20,8 +20,9 @@ export const SideBar = styled.div`
   ::-webkit-scrollbar-thumb:hover {
     background: #555; 
   }
-  background-color: #383f53;
+  background-color: #6C757D;
   @media screen and (max-width: 768px) {
+    z-index: 1;
     width: fit-content;
   }
 `;
@@ -34,7 +35,7 @@ export const MainContainer = styled.div`
 `;
 
 export const HeaderContainer = styled.div`
-  z-index: 1;
+  z-index: 2;
   position: fixed;
   width: 100%;
 `;

@@ -2,5 +2,9 @@
    "Home" : {
        "path": "/",
        "component": "Home"
-   }
+   },
+   "Product" : {
+    "path": "/product/:id",
+    "component": "Product"
+}
 }

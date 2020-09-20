@@ -25,6 +25,10 @@ export default function Layout(ChildComponent) {
       this.setState({ showSideBar: !showSideBar });
     };
 
+    gotToProduct = (link) => this.props.history.push(`/product/${link}`);
+
+    redirectUrl = (url) => this.props.history.push(url);
+
     render() {
       const data = [
         {
@@ -32,15 +36,15 @@ export default function Layout(ChildComponent) {
           options: [
             {
               subCategory: "Sub Category",
-              link: "subcategory",
+              link: "subcategory11",
             },
             {
               subCategory: "Sub Category",
-              link: "subcategory",
+              link: "subcategory12",
             },
             {
               subCategory: "Sub Category",
-              link: "subcategory",
+              link: "subcategory13",
             },
           ],
         },
@@ -49,15 +53,15 @@ export default function Layout(ChildComponent) {
           options: [
             {
               subCategory: "Sub Category",
-              link: "subcategory",
+              link: "subcategory21",
             },
             {
               subCategory: "Sub Category",
-              link: "subcategory",
+              link: "subcategory22",
             },
             {
               subCategory: "Sub Category",
-              link: "subcategory",
+              link: "subcategory23",
             },
           ],
         },
@@ -66,15 +70,15 @@ export default function Layout(ChildComponent) {
           options: [
             {
               subCategory: "Sub Category",
-              link: "subcategory",
+              link: "subcategory31",
             },
             {
               subCategory: "Sub Category",
-              link: "subcategory",
+              link: "subcategory32",
             },
             {
               subCategory: "Sub Category",
-              link: "subcategory",
+              link: "subcategory33",
             },
           ],
         },
@@ -83,15 +87,15 @@ export default function Layout(ChildComponent) {
           options: [
             {
               subCategory: "Sub Category",
-              link: "subcategory",
+              link: "subcategory41",
             },
             {
               subCategory: "Sub Category",
-              link: "subcategory",
+              link: "subcategory42",
             },
             {
               subCategory: "Sub Category",
-              link: "subcategory",
+              link: "subcategory43",
             },
           ],
         },
@@ -100,15 +104,15 @@ export default function Layout(ChildComponent) {
           options: [
             {
               subCategory: "Sub Category",
-              link: "subcategory",
+              link: "subcategory51",
             },
             {
               subCategory: "Sub Category",
-              link: "subcategory",
+              link: "subcategory52",
             },
             {
               subCategory: "Sub Category",
-              link: "subcategory",
+              link: "subcategory53",
             },
           ],
         },
@@ -117,120 +121,18 @@ export default function Layout(ChildComponent) {
           options: [
             {
               subCategory: "Sub Category",
-              link: "subcategory",
+              link: "subcategory61",
             },
             {
               subCategory: "Sub Category",
-              link: "subcategory",
+              link: "subcategory62",
             },
             {
               subCategory: "Sub Category",
-              link: "subcategory",
+              link: "subcategory63",
             },
           ],
-        },
-        {
-          category: "Category 7",
-          options: [
-            {
-              subCategory: "Sub Category",
-              link: "subcategory",
-            },
-            {
-              subCategory: "Sub Category",
-              link: "subcategory",
-            },
-            {
-              subCategory: "Sub Category",
-              link: "subcategory",
-            },
-          ],
-        },
-        {
-          category: "Category 8",
-          options: [
-            {
-              subCategory: "Sub Category",
-              link: "subcategory",
-            },
-            {
-              subCategory: "Sub Category",
-              link: "subcategory",
-            },
-            {
-              subCategory: "Sub Category",
-              link: "subcategory",
-            },
-          ],
-        },
-        {
-          category: "Category 9",
-          options: [
-            {
-              subCategory: "Sub Category",
-              link: "subcategory",
-            },
-            {
-              subCategory: "Sub Category",
-              link: "subcategory",
-            },
-            {
-              subCategory: "Sub Category",
-              link: "subcategory",
-            },
-          ],
-        },
-        {
-          category: "Category 10",
-          options: [
-            {
-              subCategory: "Sub Category",
-              link: "subcategory",
-            },
-            {
-              subCategory: "Sub Category",
-              link: "subcategory",
-            },
-            {
-              subCategory: "Sub Category",
-              link: "subcategory",
-            },
-          ],
-        },
-        {
-          category: "Category 11",
-          options: [
-            {
-              subCategory: "Sub Category",
-              link: "subcategory",
-            },
-            {
-              subCategory: "Sub Category",
-              link: "subcategory",
-            },
-            {
-              subCategory: "Sub Category",
-              link: "subcategory",
-            },
-          ],
-        },
-        {
-          category: "Category 12",
-          options: [
-            {
-              subCategory: "Sub Category",
-              link: "subcategory",
-            },
-            {
-              subCategory: "Sub Category",
-              link: "subcategory",
-            },
-            {
-              subCategory: "Sub Category",
-              link: "subcategory",
-            },
-          ],
-        },
+        }
       ];
       const { showSideBar } = this.state;
       return (
@@ -241,14 +143,16 @@ export default function Layout(ChildComponent) {
           {showSideBar && (
             <SideBar className="pt-5">
               {data.map((item, index) => (
-                <Accordion key={index} item={item} />
+                <Accordion key={index} item={item} onSubCategoryClick={this.gotToProduct} />
               ))}
             </SideBar>
           )}
           <MainContainer
             style={showSideBar ? { marginLeft: "20%" } : { marginLeft: '2.5%' }}
           >
-            <ChildComponent />
+            <ChildComponent 
+              redirectUrl={this.redirectUrl}
+            />
           </MainContainer>
           <FooterContainer
             style={showSideBar ? { marginLeft: "20%" } : null}

@@ -25,8 +25,9 @@ class Accordion extends Component {
         this.setState({ showPanel: !showPanel });
     }
 
-    handleSubCategoryClick = (link) => {
-        this.props.onSubCategoryClick(link);
+    handleSubCategoryClick = (event) => {
+        const { target: { id } } = event;
+        this.props.onSubCategoryClick(id);
     }
 
     render() {
@@ -55,7 +56,7 @@ class Accordion extends Component {
                                     link = ''
                                 } = option;
                                 return (
-                                    <StyledItem key={index} onClick={this.handleSubCategoryClick(link)}>
+                                    <StyledItem key={index} id={link} onClick={this.handleSubCategoryClick}>
                                         {subCategory}
                                     </StyledItem>
                                 )
