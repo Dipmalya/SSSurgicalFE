@@ -10,5 +10,9 @@
     "Item": {
         "path": "/item/:id",
         "component": "Item"
+    },
+    "Checkout": {
+        "path": "/checkout/:id",
+        "component": "Checkout"
     }
 }

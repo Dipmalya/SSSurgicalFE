@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { StyledCard, StyledName, StyledCategory, StyledPrice, StyledImg, StyledDesc, StyledStatement } from './view';
+import NumberInput from '../NumberInput';
 
 class ItemCard extends Component {
     constructor(props) {
@@ -28,15 +29,22 @@ class ItemCard extends Component {
             itemDesc,
             itemPrice
         } = this.state;
+        const { checkingOut } = this.props;
         return (
             <div>
                 <StyledCard className="d-md-flex" onClick={this.handleClick}>
                     <StyledImg src={imageUrl} alt={itemName} className="col-md-3 p-0"></StyledImg>
                     <StyledDesc className="col-md-9">
-                        <StyledName className="mt-md-3">{itemName}</StyledName>
+                        <StyledName className="mt-md-3 pt-2">{itemName}</StyledName>
                         <StyledCategory className="mt-3">{itemCategory}</StyledCategory>
-                        <StyledStatement className="mt-3">{itemDesc}</StyledStatement>
+                        {!checkingOut && <StyledStatement className="mt-3">{itemDesc}</StyledStatement>}
                         <StyledPrice>{itemPrice ? `Rs. ${itemPrice}` : ''}</StyledPrice>
+                        { 
+                            checkingOut && 
+                            <div className="pb-3">
+                                <NumberInput />
+                            </div>
+                        }
                     </StyledDesc>
                 </StyledCard>
             </div>
@@ -51,7 +59,8 @@ ItemCard.defaultProps = {
     itemDesc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis officia quidem, dolores incidunt ducimus, vel repudiandae excepturi molestiae, expedita eos fugiat ut eaque repellendus ipsum.',
     name: 'item-card',
     imageUrl: 'https://www.alimed.com/_resources/cache/images/product/98FCP47-1_1000x1000-pad.jpg',
-    cardClickHandler: () => {}
+    cardClickHandler: () => {},
+    checkingOut: false
 }
 
 ItemCard.propTypes = {
@@ -63,6 +72,7 @@ ItemCard.propTypes = {
     itemDesc: PropTypes.string,
     itemPrice: PropTypes.string,
     disabled: PropTypes.bool,
+    checkingOut: PropTypes.bool,
     theme: PropTypes.shape(),
     cardClickHandler: PropTypes.func
 }

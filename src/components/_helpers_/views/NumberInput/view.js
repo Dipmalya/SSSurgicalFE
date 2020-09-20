@@ -7,6 +7,7 @@ export const StyledNumberInput = styled.input`
     margin: 0px 4px 0px 17px;
     width: 1.75rem;
     border: ${props => props.theme.input.number.border};
+    background-color: ${props => props.theme.input.number.backgroundColor};
     font-size: ${props => props.theme.input.number.fontSize};
 `;
 

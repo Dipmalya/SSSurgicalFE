@@ -60,6 +60,7 @@ const defaultTheme = {
         number: {
             fontSize: '22px',
             border: 0,
+            backgroundColor: '#E6E1E1',
             button: {
                 borderRadius: '50%',
                 fontSize: '20px',
