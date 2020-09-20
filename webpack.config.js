@@ -23,7 +23,7 @@ module.exports = {
                 "use": ["eslint-loader"]
             },
             {
-                "test": /\.scss$/,
+                "test": /\.(css|scss)$/,
                 "loader": 'style-loader!css-loader!sass-loader'
             }
         ]

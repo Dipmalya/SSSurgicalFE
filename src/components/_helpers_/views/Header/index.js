@@ -6,8 +6,11 @@ class Header extends Component {
     render() {
         return (
             <div>
-                <nav className="d-block navbar navbar-expand-sm bg-dark navbar-dark">
-                    <i className="text-white icon-reorder mr-md-4 mr-2" onClick={this.props.toggleBar}></i>
+                <nav className="d-block navbar navbar-expand-sm bg-secondary navbar-dark">
+                    <i 
+                        className="fa fa-bars text-white mr-md-4 mr-2 btn" 
+                        onClick={this.props.toggleBar}
+                    ></i>
                     <a className="navbar-brand" href="#">Logo</a>
                 </nav>
             </div>

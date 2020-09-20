@@ -86,17 +86,17 @@ const defaultTheme = {
         }
     },
     accordion: {
-        backgroundColor: '#383F53',
+        backgroundColor: '#6F7780',
         borderColor: '#272C41',
         color: '#FFF',
         fontSize: '18px',
         fontWeight: 'bold',
         letterSpacing: '0.5px',
         panel: {
-            fontWeight: '300',
-            backgroundColor: '#E9E8EE',
+            fontWeight: '500',
+            backgroundColor: '#CACCCF',
             focus: {
-                backgroundColor: '#5E7389',
+                backgroundColor: '#6B7075',
                 fontSize: '18.5px',
                 color: '#FFF'
             }
