@@ -19,7 +19,11 @@ export default function Layout(ChildComponent) {
     }
 
     componentDidMount() {
-        window.addEventListener("resize", this.setState({ showSideBar: window.innerWidth > 768 }));
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+      window.addEventListener("resize", this.setState({ showSideBar: window.innerWidth > 768 }));
     }
 
     toggleBar = () => {
