@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Layout from "../_helpers_/HOC/LayoutWrapper";
-import { ItemCard } from "../_helpers_/views";
+import { ItemCard, Input } from "../_helpers_/views";
 
 class Checkout extends Component {
   constructor(props) {
@@ -38,7 +38,7 @@ class Checkout extends Component {
           <div>
             <div class="form-group">
               <label for="exampleInputEmail1">Name</label>
-              <input
+              <Input
                 type="email"
                 class="form-control"
                 id="exampleInputName1"
@@ -48,7 +48,7 @@ class Checkout extends Component {
             </div>
             <div class="form-group">
               <label for="exampleInputEmail1">Mobile</label>
-              <input
+              <Input
                 type="tel"
                 class="form-control"
                 id="exampleInputMobile1"
@@ -61,7 +61,7 @@ class Checkout extends Component {
             </div>
             <div class="form-group">
               <label for="exampleInputEmail1">Email address</label>
-              <input
+              <Input
                 type="email"
                 class="form-control"
                 id="exampleInputEmail1"
@@ -78,7 +78,7 @@ class Checkout extends Component {
             </div>
             <div class="form-group">
               <label for="exampleInputPincode1">Pin code</label>
-              <input
+              <Input
                 type="text"
                 class="form-control"
                 id="exampleInputpin1"

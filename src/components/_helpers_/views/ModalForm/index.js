@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Input from '../Input';
 
 class ModalForm extends Component {
     constructor(props) {
@@ -30,13 +31,13 @@ class ModalForm extends Component {
                         !register ? (
                             <>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Email address</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+                                    <label for="exampleInputEmail1">Email address</label><br/>
+                                    <Input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
                                     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Password</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
+                                    <label for="exampleInputPassword1">Password</label><br/>
+                                    <Input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
                                 </div>
                                 <div className="py-2">Not a member yet? 
                                     <div className="btn" onClick={() => this.setState({ register: true })}>
@@ -51,22 +52,22 @@ class ModalForm extends Component {
                         ) : (
                                 <>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Name</label>
-                                        <input type="email" class="form-control" id="exampleInputName1" aria-describedby="emailHelp" placeholder="Enter name" />
+                                        <label for="exampleInputName1">Name</label><br />
+                                        <Input type="email" class="form-control" id="exampleInputName1" aria-describedby="emailHelp" placeholder="Enter name" />
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Mobile</label>
-                                        <input type="tel" class="form-control" id="exampleInputMobile1" aria-describedby="emailHelp" placeholder="Enter mobile" />
+                                        <label for="exampleInputMobile1">Mobile</label>< br/>
+                                        <Input type="tel" class="form-control" id="exampleInputMobile1" aria-describedby="emailHelp" placeholder="Enter mobile" />
                                         <small id="emailHelp" class="form-text text-muted">We won't bother you unless absolute necessary.</small>
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Email address</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+                                        <label for="exampleInputEmail1">Email address</label><br />
+                                        <Input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
                                         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputPassword1">Password</label>
-                                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
+                                        <label for="exampleInputPassword1">Password</label><br />
+                                        <Input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
                                     </div>
                                     <div className="py-2">Already registered? 
                                         <div className="btn" onClick={() => this.setState({ register: false })}>
