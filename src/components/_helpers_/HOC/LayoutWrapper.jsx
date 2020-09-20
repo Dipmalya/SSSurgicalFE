@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Header, Accordion, Footer } from "../views";
+import { Header, Accordion, Footer, ModalForm } from "../views";
 import {
   HeaderContainer,
   SideBar,
@@ -13,6 +13,8 @@ export default function Layout(ChildComponent) {
       super(props);
       this.state = {
         showSideBar: true,
+        isLoggedIn: this.props.isLoggedIn,
+        modalOpenned: false
       };
     }
 
@@ -24,6 +26,20 @@ export default function Layout(ChildComponent) {
       const { showSideBar } = this.state;
       this.setState({ showSideBar: !showSideBar });
     };
+
+    proceedFurther = () => {
+      const { checkoutId } = this.state;
+      this.setState({ modalOpenned: false });
+      if (checkoutId) this.redirectUrl(`/checkout/${checkoutId}`)
+    }
+
+    openRegistration = (checkoutId) => {
+      this.setState({ modalOpenned: true, checkoutId });
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      })
+    }
 
     gotToProduct = (link) => this.props.history.push(`/product/${link}`);
 
@@ -134,7 +150,7 @@ export default function Layout(ChildComponent) {
           ],
         }
       ];
-      const { showSideBar } = this.state;
+      const { showSideBar, isLoggedIn, modalOpenned } = this.state;
       return (
         <div>
           <HeaderContainer>
@@ -150,8 +166,15 @@ export default function Layout(ChildComponent) {
           <MainContainer
             style={showSideBar ? { marginLeft: "20%" } : { marginLeft: '2.5%' }}
           >
+            {modalOpenned && 
+              <ModalForm
+                  proceedFurther={this.proceedFurther}
+              />
+            }
             <ChildComponent 
               redirectUrl={this.redirectUrl}
+              isLoggedIn={isLoggedIn}
+              openRegistration={this.openRegistration}
             />
           </MainContainer>
           <FooterContainer

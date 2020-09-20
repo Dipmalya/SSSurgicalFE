@@ -50,7 +50,7 @@ export const StyledImg = styled.img`
 export const StyledAction = styled.div`
     button {
         padding: 10px;
-        width: 33%;
+        width: 40%;
     }
 `;
 

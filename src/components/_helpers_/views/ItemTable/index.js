@@ -20,9 +20,14 @@ class ItemTable extends Component {
         }
     }
 
-    handleClick = () => {
-        const { id, cardClickHandler } = this.props;
-        cardClickHandler(id);
+    handleAddToCart = () => {
+        const { id, addToCartHandler } = this.props;
+        addToCartHandler(id);
+    }
+
+    handleBuyNow = () => {
+        const { id, buyNowHandler } = this.props;
+        buyNowHandler(id);
     }
 
     render() {
@@ -38,7 +43,7 @@ class ItemTable extends Component {
         } = this.props;
         return (
             <div>
-                <StyledCard className="d-md-flex" onClick={this.handleClick}>
+                <StyledCard className="d-md-flex">
                     <StyledImg src={imageUrl} alt={itemName} className="col-md-5 p-2"></StyledImg>
                     <StyledDesc className="col-md-7 py-4 pl-5">
                         <StyledName className="mt-md-3">{itemName}</StyledName>
@@ -50,7 +55,7 @@ class ItemTable extends Component {
                                     <div className="mb-2"><u>Specifications</u></div>
                                     <ul>
                                         {
-                                            itemSpecs.map(spec => <li key={spec}>{spec}</li>)
+                                            itemSpecs.map((spec, index) => <li key={index}>{spec}</li>)
                                         }
                                     </ul>
                                 </StyledStatement>
@@ -59,7 +64,7 @@ class ItemTable extends Component {
                         <StyledPrice className="mt-3">
                             {
                                 priceText && (
-                                    <i class="fa fa-inr" aria-hidden="true">
+                                    <i className="fa fa-inr" aria-hidden="true">
                                         &nbsp;{priceText}
                                     </i>
                                 )
@@ -71,8 +76,8 @@ class ItemTable extends Component {
                             )
                         }
                         <StyledAction>
-                            <button className="btn btn-secondary my-4 mr-5">Add to cart</button>
-                            <button className="btn btn-info my-3">Buy now</button>
+                            <button className="w-auto btn btn-secondary my-4 mr-5" onClick={this.handleAddToCart}>Add to cart</button>
+                            <button className="btn btn-info my-3" onClick={this.handleBuyNow}>Buy now</button>
                         </StyledAction>
                     </StyledDesc>
                 </StyledCard>
@@ -92,7 +97,7 @@ ItemTable.defaultProps = {
     priceSpecs: false,
     priceStatement: '',
     itemSpecs: [],
-    cardClickHandler: () => { }
+    addToCartHandler: () => { }
 }
 
 ItemTable.propTypes = {
@@ -109,7 +114,8 @@ ItemTable.propTypes = {
     disabled: PropTypes.bool,
     priceGiven: PropTypes.bool,
     theme: PropTypes.shape(),
-    cardClickHandler: PropTypes.func
+    buyNowHandler: PropTypes.func,
+    addToCartHandler: PropTypes.func
 }
 
 export default ItemTable
