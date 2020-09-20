@@ -12,3 +12,16 @@ body {
     text-decoration-color: #082b4f;
     padding-bottom: 2px;
 }
+
+.home-icon {
+    font-size: 20px;
+    right: 0;
+    background-color: #E6E1E1;
+    padding: 3px 7px;
+    margin-right: 15px;
+    position: absolute;
+}
+
+.home-icon:hover {
+    background-color: #c7c4c4;
+}

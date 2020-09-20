@@ -1,10 +1,14 @@
 {
-   "Home" : {
-       "path": "/",
-       "component": "Home"
-   },
-   "Product" : {
-    "path": "/product/:id",
-    "component": "Product"
-}
+    "Home": {
+        "path": "/",
+        "component": "Home"
+    },
+    "Product": {
+        "path": "/product/:id",
+        "component": "Product"
+    },
+    "Item": {
+        "path": "/item/:id",
+        "component": "Item"
+    }
 }

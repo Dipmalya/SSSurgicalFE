@@ -12,18 +12,27 @@ class Product extends Component {
 
     handleCardClick = (id) => this.props.redirectUrl(`/item/${id}`);
 
+    goToHomePage = () => this.props.redirectUrl(`/`);
+
     render() {
         const { products } = this.state;
         return (
             <div className="mt-md-3 mt-lg-0 zIndex-1">
-                <h3 className="mb-3 puck-heading">Sub Category</h3>
-                {
-                    products.map(item => (
-                        <div className="mb-3 mr-3" key={item}>
-                            <ItemCard id={item} cardClickHandler={this.handleCardClick} />
-                        </div>
-                    ))
-                }
+                <div className="d-flex">
+                    <h3 className="mb-3">Sub Category</h3>
+                    <button className="home-icon mr-md-3 btn" onClick={this.goToHomePage}>
+                        <i className="fa fa-home"></i>
+                    </button>
+                </div>
+                <>
+                    {
+                        products.map(item => (
+                            <div className="mb-3 mr-3" key={item}>
+                                <ItemCard id={item} cardClickHandler={this.handleCardClick} />
+                            </div>
+                        ))
+                    }
+                </>
             </div>
         )
     }
