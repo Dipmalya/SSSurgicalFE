@@ -1,8 +1,7 @@
 const webpack = require("webpack");
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 module.exports = {
     "devServer": {
-        "port": 5000,
+        "port": 5001,
         "contentBase": "./dist",
         "hot": true,
         "historyApiFallback": {
@@ -41,8 +40,6 @@ module.exports = {
         "filename": "bundle.js"
     },
     "plugins": [
-        new webpack.optimize.ModuleConcatenationPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
-        new LodashModuleReplacementPlugin
+        new webpack.HotModuleReplacementPlugin()
     ]
 };

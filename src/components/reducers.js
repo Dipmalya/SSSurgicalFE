@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-// import { reducer1 } from './todoReducer';
+import { categoryList } from './Home/reducer';
+import { viewProduct } from './Product/reducer';
 
 const rootReducer = combineReducers({
-    // reducer1
+    categoryList,
+    viewProduct
 });
 
 export default rootReducer

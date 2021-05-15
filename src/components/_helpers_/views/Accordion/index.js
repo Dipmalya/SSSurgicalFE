@@ -20,14 +20,17 @@ class Accordion extends Component {
         }
     }
 
-    toggleArrow = () => {
-        const { showPanel } = this.state;
+    toggleArrow = (event) => {
+        const { showPanel, item: { options = [] } } = this.state;
+        if (!options.length) {
+            this.handleSubCategoryClick(event, true);
+        }
         this.setState({ showPanel: !showPanel });
     }
 
-    handleSubCategoryClick = (event) => {
+    handleSubCategoryClick = (event, category) => {
         const { target: { id } } = event;
-        this.props.onSubCategoryClick(id);
+        this.props.onSubCategoryClick(id, category);
     }
 
     render() {
@@ -35,16 +38,18 @@ class Accordion extends Component {
             showPanel,
             item: {
                 category = '',
-                options = []
+                options = [],
+                link = ''
             }
         } = this.state;
+        const panelIcon = showPanel ? 'fa fa-caret-up' : 'fa fa-caret-down';
 
         return (
             <div>
-                <StyledTab onClick={this.toggleArrow}>
+                <StyledTab onClick={this.toggleArrow} id={link}>
                     {category}
                     <StyledIcon
-                        className={showPanel ? 'fa fa-caret-up' : 'fa fa-caret-down'}
+                        className={options.length && panelIcon}
                     />
                 </StyledTab>
                 {showPanel && (

@@ -1,8 +1,10 @@
-import { connect } from 'react-redux';
-import Product from './index';
+import { connect } from "react-redux";
+import Product from "./index";
 
-const mapStateToProps = {};
+const mapStateToProps = ({ viewProduct }) => ({
+  viewProduct,
+});
 
 const mapDispatchToProps = {};
 
-export default connect(null, null)(Product);
+export default connect(mapStateToProps, null)(Product);

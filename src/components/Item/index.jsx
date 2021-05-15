@@ -3,46 +3,43 @@ import Layout from "../_helpers_/HOC/LayoutWrapper";
 import { ItemTable } from "../_helpers_/views";
 
 class Item extends Component {
+  constructor(props) {
+    super(props);
+    const param = this.props.history.location.pathname.split("/").pop();
+    this.state = {
+      itemId: param,
+      selectedItem: {},
+    };
+  }
+
+  componentDidMount() {
+    const { viewProduct } = this.props;
+    const { itemId } = this.state;
+    this.setState({
+      selectedItem: viewProduct.find((item) => item.itemId === itemId),
+    });
+  }
+
   addToCartHandler = (id) => {
     const isLoggedIn = this.props.checkLogin;
-    if(isLoggedIn) {
-        this.props.addToCart(id, this.props.redirectUrl('/cart'))
+    if (isLoggedIn) {
+      this.props.addToCart(id, this.props.redirectUrl("/cart"));
     } else {
-        this.props.openRegistration();
+      this.props.openRegistration();
     }
-  }
+  };
 
   buyNowHandler = (id) => {
     const isLoggedIn = this.props.checkLogin;
-    if(isLoggedIn) {
-        this.props.buyNow(id, this.props.redirectUrl('/checkout/id'))
+    if (isLoggedIn) {
+      this.props.buyNow(id, this.props.redirectUrl("/checkout/id"));
     } else {
-        this.props.openRegistration(id);
+      this.props.openRegistration(id);
     }
-  }
+  };
 
   render() {
-    const item = {
-      id: "1",
-      itemName: "Mock Item Name",
-      itemCategory: "Mock Item Category",
-      itemDesc:
-        "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis officia quidem, dolores incidunt ducimus, vel repudiandae excepturi molestiae, expedita eos fugiat ut eaque repellendus ipsum.",
-      name: "item-card",
-      imageUrl:
-        "https://www.alimed.com/_resources/cache/images/product/98FCP47-1_1000x1000-pad.jpg",
-      itemSpecs: [
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, soluta?",
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, soluta?",
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, soluta?",
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, soluta?",
-      ],
-      itemPrice: "500",
-      priceSpecs: "piece",
-      priceGiven: false,
-      priceStatement:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam optio laudantium odit! Veritatis, at enim.",
-    };
+    const { selectedItem: item } = this.state;
     return (
       <div className="my-md-3 mt-lg-0 mr-3">
         <ItemTable
