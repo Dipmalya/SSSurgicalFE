@@ -21,9 +21,9 @@ class Item extends Component {
   }
 
   addToCartHandler = (id) => {
-    const { userId } = this.props.userData;
+    const { isLoggedIn } = this.props;
     const { selectedItem: item } = this.state;
-    if (userId) {
+    if (isLoggedIn) {
       this.props.addToCart(item);
       this.props.redirectUrl('/checkout');
     } else {
@@ -32,9 +32,9 @@ class Item extends Component {
   };
 
   buyNowHandler = (id) => {
-    const isLoggedIn = this.props.checkLogin;
+    const { isLoggedIn } = this.props;
     if (isLoggedIn) {
-      this.props.buyNow(id, this.props.redirectUrl("/checkout/id"));
+      this.props.buyNow(id, this.props.redirectUrl("/checkout"));
     } else {
       this.props.openRegistration(id);
     }

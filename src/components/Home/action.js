@@ -4,7 +4,8 @@ import {
   GET_CATORY_SUCCESS,
   GET_CATORY_FAILURE,
   LOGIN_SUCCESS,
-  LOGIN_FAILURE
+  LOGIN_FAILURE,
+  LOGOUT
 } from "../../config/actionTypes";
 
 const { GET_CATEGORY_LIST, LOGIN_USER } = URL;
@@ -51,3 +52,8 @@ const loginFailure = (payload) => ({
   type: LOGIN_FAILURE,
   payload,
 });
+
+export const logoutUser = () => ({
+  type: LOGOUT,
+  payload: {}
+})

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getCategoryList, loginUser } from "../../Home/action";
+import { getCategoryList, loginUser, logoutUser } from "../../Home/action";
 import { addToCart } from "../../Item/action";
 import {
   getProductByCategory,
@@ -24,6 +24,7 @@ const mapDispatchToProps = (dispatch) => ({
   getProductByCategory: bindActionCreators(getProductByCategory, dispatch),
   loginUser: bindActionCreators(loginUser, dispatch),
   addToCart: bindActionCreators(addToCart, dispatch),
+  logoutUser: bindActionCreators(logoutUser, dispatch),
   getProductBySubCategory: bindActionCreators(
     getProductBySubCategory,
     dispatch
@@ -36,13 +37,14 @@ export default (ChildComponent) => {
       super(props);
       this.state = {
         showSideBar: true,
-        isLoggedIn: this.props.isLoggedIn,
+        isLoggedIn: false,
         modalOpenned: false,
       };
     }
 
     componentDidMount() {
       const { categoryList, getCategoryList } = this.props;
+      const userId = localStorage.getItem('user') || '';
       if (!categoryList.length) {
         getCategoryList();
       }
@@ -54,6 +56,9 @@ export default (ChildComponent) => {
         "resize",
         this.setState({ showSideBar: window.innerWidth > 768 })
       );
+      this.setState({
+        isLoggedIn: userId ? true : false,
+      });
     }
 
     toggleBar = () => {
@@ -75,9 +80,11 @@ export default (ChildComponent) => {
     };
 
     handleCart = (id) => {
-      const cartItem = this.props.viewProduct.find(data => data.itemId === id);
+      const cartItem = this.props.viewProduct.find(
+        (data) => data.itemId === id
+      );
       this.props.addToCart(cartItem);
-    }
+    };
 
     gotToProduct = (link, category) => {
       if (category) {
@@ -90,13 +97,24 @@ export default (ChildComponent) => {
 
     redirectUrl = (url) => this.props.history.push(url);
 
+    handleLogout = () => {
+      this.props.logoutUser();
+      this.redirectUrl('/');
+      window.location.reload();
+    }
+
     render() {
       const { categoryList = [], loginUser } = this.props;
       const { showSideBar, isLoggedIn, modalOpenned } = this.state;
       return (
         <div>
           <HeaderContainer>
-            <Header toggleBar={this.toggleBar} />
+            <Header
+              toggleBar={this.toggleBar}
+              isLoggedIn={isLoggedIn}
+              onLogout={this.handleLogout}
+              goToCart={() => this.redirectUrl("/checkout")}
+            />
           </HeaderContainer>
           {showSideBar && (
             <SideBar className="pt-5">
@@ -115,7 +133,7 @@ export default (ChildComponent) => {
               showSideBar ? { marginLeft: "22.5%" } : { marginLeft: "2.5%" }
             }
           >
-            {modalOpenned && (
+            {!isLoggedIn && modalOpenned && (
               <ModalForm
                 proceedFurther={this.proceedFurther}
                 onLogin={loginUser}
