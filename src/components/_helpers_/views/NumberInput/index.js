@@ -15,10 +15,14 @@ class NumberInput extends Component {
         const { value } = this.state;
         const buttonType = event.target.innerHTML;
         if (buttonType === '+') {
-            this.setState({ value: parseInt(value) + 1 });
+            this.setState({ value: parseInt(value) + 1 }, () => {
+                this.props.onChange({ name, value: this.state.value });
+            });
         }
         else if (buttonType === '-' && parseInt(value) > 1) {
-            this.setState({ value: parseInt(value) - 1 });
+            this.setState({ value: parseInt(value) - 1 }, () => {
+                this.props.onChange({ name, value: this.state.value });
+            });
         }
     }
 

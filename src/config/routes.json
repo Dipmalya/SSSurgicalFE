@@ -12,7 +12,7 @@
         "component": "Item"
     },
     "Checkout": {
-        "path": "/checkout/:id",
+        "path": "/checkout",
         "component": "Checkout"
     }
 }

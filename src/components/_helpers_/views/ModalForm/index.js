@@ -6,11 +6,32 @@ class ModalForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      email: '',
+      password: '',
       register: false,
     };
   }
+
+  handleLogin = () => {
+    const { email, password, error } = this.state;
+    const { onLogin, proceedFurther, addToCart, itemId } = this.props;
+    if (!error) {
+      onLogin({ email, password }, () => {
+        addToCart(itemId.split("/").pop());
+        proceedFurther();
+      });
+    }
+  }
+
+  changeField = ({ name, value, error }) => {
+    this.setState({
+      [name]: value,
+      error
+    });
+  }
+
   render() {
-    const { register } = this.state;
+    const { register, email, password } = this.state;
     const { proceedFurther } = this.props;
     return (
       <div className="my-md-3 mt-lg-0 mr-3 px-3">
@@ -39,6 +60,9 @@ class ModalForm extends Component {
                 <label for="exampleInputEmail1">Email address</label>
                 <br />
                 <Input
+                  name="email"
+                  value={email}
+                  onChange={this.changeField}
                   type="email"
                   class="form-control"
                   id="exampleInputEmail1"
@@ -53,6 +77,9 @@ class ModalForm extends Component {
                 <label for="exampleInputPassword1">Password</label>
                 <br />
                 <Input
+                  name="password"
+                  value={password}
+                  onChange={this.changeField}
                   type="password"
                   class="form-control"
                   id="exampleInputPassword1"
@@ -74,6 +101,7 @@ class ModalForm extends Component {
                 <button
                   type="button"
                   class="col-md-2 btn btn-primary mr-md-3 mb-md-0 mb-2"
+                  onClick={this.handleLogin}
                 >
                   Sign in
                 </button>

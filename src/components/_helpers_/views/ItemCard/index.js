@@ -21,6 +21,7 @@ class ItemCard extends Component {
       itemCategory: this.props.itemCategory,
       itemDesc: this.props.itemDesc,
       itemPrice: this.props.itemPrice,
+      quantity: this.props.quantity,
     };
   }
 
@@ -32,12 +33,24 @@ class ItemCard extends Component {
       itemCategory: props.category,
       itemDesc: props.itemDesc,
       itemPrice: props.itemPrice,
+      quantity: props.quantity,
+      showDelete: props.showDelete,
     };
   }
+
+  updateQunatity = ({ value }) => {
+    const { itemId, updateCartQuantity } = this.props;
+    updateCartQuantity({ itemId, value });
+  };
 
   handleClick = () => {
     const { itemId, cardClickHandler } = this.props;
     cardClickHandler(itemId);
+  };
+
+  handleDelete = () => {
+    const { itemId, deleteItemFromCart } = this.props;
+    deleteItemFromCart(itemId);
   };
 
   render() {
@@ -47,6 +60,8 @@ class ItemCard extends Component {
       itemCategory,
       itemDesc,
       itemPrice,
+      quantity = 1,
+      showDelete = false,
     } = this.state;
     const { checkingOut } = this.props;
     return (
@@ -58,7 +73,17 @@ class ItemCard extends Component {
             className="col-md-3 p-0"
           ></StyledImg>
           <StyledDesc className="col-md-9">
-            <StyledName className="mt-md-3 pt-2">{itemName}</StyledName>
+            <div className="d-flex">
+              <StyledName className="col-11 mt-md-3 pt-2">
+                {itemName}
+              </StyledName>
+              {showDelete && (
+                <i
+                  className="col-1 pt-4 px-3 fa fa-trash"
+                  onClick={this.handleDelete}
+                />
+              )}
+            </div>
             <StyledCategory className="mt-3">{itemCategory}</StyledCategory>
             {!checkingOut && (
               <StyledStatement className="mt-3">{itemDesc}</StyledStatement>
@@ -66,7 +91,7 @@ class ItemCard extends Component {
             <StyledPrice>{itemPrice ? `Rs. ${itemPrice}` : ""}</StyledPrice>
             {checkingOut && (
               <div className="pb-3">
-                <NumberInput />
+                <NumberInput value={quantity} onChange={this.updateQunatity} />
               </div>
             )}
           </StyledDesc>

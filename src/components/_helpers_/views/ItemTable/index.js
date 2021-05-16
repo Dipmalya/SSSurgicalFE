@@ -20,8 +20,8 @@ class ItemTable extends Component {
   }
 
   handleAddToCart = () => {
-    const { id, addToCartHandler } = this.props;
-    addToCartHandler(id);
+    const { addToCartHandler } = this.props;
+    addToCartHandler();
   };
 
   handleBuyNow = () => {

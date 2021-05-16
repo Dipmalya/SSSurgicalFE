@@ -21,7 +21,7 @@ class Input extends Component {
     }
 
     validate = () => {
-        const { type, value } = this.state;
+        const { name, type, value } = this.state;
         switch (type) {
             case 'email': {
                 /* eslint-disable */
@@ -29,6 +29,7 @@ class Input extends Component {
                 this.setState({ error: !(re.test(String(value).toLowerCase())) });
             }
         }
+        this.props.onChange({ name, value });
     }
 
     render() {

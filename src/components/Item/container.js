@@ -1,8 +1,14 @@
-import { connect } from 'react-redux';
-import Item from './index';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { addToCart } from "./action";
+import Item from "./index";
 
-const mapStateToProps = {};
+const mapStateToProps = (props) => ({
+  ...props,
+});
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = (dispatch) => ({
+  addToCart: bindActionCreators(addToCart, dispatch),
+});
 
-export default connect(null, null)(Item);
+export default connect(mapStateToProps, mapDispatchToProps)(Item);

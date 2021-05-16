@@ -3,9 +3,11 @@ import { URL } from "../../config/endpoints";
 import {
   GET_CATORY_SUCCESS,
   GET_CATORY_FAILURE,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE
 } from "../../config/actionTypes";
 
-const { GET_CATEGORY_LIST } = URL;
+const { GET_CATEGORY_LIST, LOGIN_USER } = URL;
 
 export const getCategoryList = () => {
   return dispatch => {
@@ -23,5 +25,29 @@ const categoryListSuccess = (payload) => ({
 
 const categoryListFailure = (payload) => ({
   type: GET_CATORY_FAILURE,
+  payload,
+});
+
+export const loginUser = (loginObj, callback) => {
+  return dispatch => {
+    axios
+      .post(LOGIN_USER, loginObj)
+      .then((res) => {
+        dispatch(loginSuccess(res.data));
+        if (callback) {
+          callback();
+        }
+      })
+      .catch((res) => dispatch(loginFailure(res.data)));
+  };
+}
+
+const loginSuccess = (payload) => ({
+  type: LOGIN_SUCCESS,
+  payload,
+});
+
+const loginFailure = (payload) => ({
+  type: LOGIN_FAILURE,
   payload,
 });

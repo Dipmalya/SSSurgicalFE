@@ -21,9 +21,11 @@ class Item extends Component {
   }
 
   addToCartHandler = (id) => {
-    const isLoggedIn = this.props.checkLogin;
-    if (isLoggedIn) {
-      this.props.addToCart(id, this.props.redirectUrl("/cart"));
+    const { userId } = this.props.userData;
+    const { selectedItem: item } = this.state;
+    if (userId) {
+      this.props.addToCart(item);
+      this.props.redirectUrl('/checkout');
     } else {
       this.props.openRegistration();
     }

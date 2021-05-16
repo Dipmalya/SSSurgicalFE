@@ -7,5 +7,7 @@ export const URL = {
 
     GET_ITEM_BY_ID: `${BASE_URL}/product/`,
 
-    SEND_EMAIL: `${BASE_URL}/user/send/email`
+    SEND_EMAIL: `${BASE_URL}/user/send/email`,
+
+    LOGIN_USER: `${BASE_URL}/user/login`
 }

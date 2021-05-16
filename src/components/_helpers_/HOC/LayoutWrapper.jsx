@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { bindActionCreators, compose } from "redux";
-import { getCategoryList } from "../../Home/action";
+import { bindActionCreators } from "redux";
+import { getCategoryList, loginUser } from "../../Home/action";
+import { addToCart } from "../../Item/action";
 import {
   getProductByCategory,
   getProductBySubCategory,
@@ -21,13 +22,15 @@ const mapStateToProps = (props) => ({
 const mapDispatchToProps = (dispatch) => ({
   getCategoryList: bindActionCreators(getCategoryList, dispatch),
   getProductByCategory: bindActionCreators(getProductByCategory, dispatch),
+  loginUser: bindActionCreators(loginUser, dispatch),
+  addToCart: bindActionCreators(addToCart, dispatch),
   getProductBySubCategory: bindActionCreators(
     getProductBySubCategory,
     dispatch
   ),
 });
 
-function Layout(ChildComponent) {
+export default (ChildComponent) => {
   class WrappedComponent extends Component {
     constructor(props) {
       super(props);
@@ -59,9 +62,8 @@ function Layout(ChildComponent) {
     };
 
     proceedFurther = () => {
-      const { checkoutId } = this.state;
       this.setState({ modalOpenned: false });
-      if (checkoutId) this.redirectUrl(`/checkout/${checkoutId}`);
+      this.redirectUrl(`/checkout`);
     };
 
     openRegistration = (checkoutId) => {
@@ -71,6 +73,11 @@ function Layout(ChildComponent) {
         behavior: "smooth",
       });
     };
+
+    handleCart = (id) => {
+      const cartItem = this.props.viewProduct.find(data => data.itemId === id);
+      this.props.addToCart(cartItem);
+    }
 
     gotToProduct = (link, category) => {
       if (category) {
@@ -84,7 +91,7 @@ function Layout(ChildComponent) {
     redirectUrl = (url) => this.props.history.push(url);
 
     render() {
-      const { categoryList = [] } = this.props;
+      const { categoryList = [], loginUser } = this.props;
       const { showSideBar, isLoggedIn, modalOpenned } = this.state;
       return (
         <div>
@@ -108,7 +115,14 @@ function Layout(ChildComponent) {
               showSideBar ? { marginLeft: "22.5%" } : { marginLeft: "2.5%" }
             }
           >
-            {modalOpenned && <ModalForm proceedFurther={this.proceedFurther} />}
+            {modalOpenned && (
+              <ModalForm
+                proceedFurther={this.proceedFurther}
+                onLogin={loginUser}
+                itemId={this.props.history.location.pathname}
+                addToCart={this.handleCart}
+              />
+            )}
             <ChildComponent
               {...this.props}
               redirectUrl={this.redirectUrl}
@@ -123,7 +137,5 @@ function Layout(ChildComponent) {
       );
     }
   }
-  return WrappedComponent;
-}
-
-export default compose(connect(mapStateToProps, mapDispatchToProps), Layout);
+  return connect(mapStateToProps, mapDispatchToProps)(WrappedComponent);
+};
