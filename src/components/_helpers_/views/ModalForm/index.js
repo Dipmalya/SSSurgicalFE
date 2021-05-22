@@ -6,10 +6,24 @@ class ModalForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
+      name: "",
+      mobile: "",
+      email: "",
+      password: "",
+      login: true,
+      error: true,
       register: false,
     };
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    const { login, register, email, password, name } = state;
+    if (login) {
+      return { error: email === '' || password === '' };
+    }
+    if (register) {
+      return { error: email === '' || password === '' || name === '' || password === '' };
+    }
   }
 
   handleLogin = () => {
@@ -21,18 +35,26 @@ class ModalForm extends Component {
         proceedFurther();
       });
     }
-  }
+  };
+
+  handleRegister = () => {
+    const { name, mobile, email, password, error } = this.state;
+    const { onRegister } = this.props;
+    if (!error) {
+      onRegister({ name, mobile, email, password }, () => this.handleLogin());
+    }
+  };
 
   changeField = ({ name, value, error }) => {
     this.setState({
       [name]: value,
-      error
+      error,
     });
-  }
+  };
 
   render() {
-    const { register, email, password } = this.state;
-    const { proceedFurther } = this.props;
+    const { login, register, email, password, name, mobile, error } = this.state;
+    const { closeRegistration } = this.props;
     return (
       <div className="my-md-3 mt-lg-0 mr-3 px-3">
         <div className="row alert alert-warning" role="alert">
@@ -40,21 +62,21 @@ class ModalForm extends Component {
             To add an item to cart or to buy an item, kindly let us know who you
             are.
             <br />
-            Don't worry, if you want to proceed without sharing your details,
-            you can do so by buying a single item at a time
+            Adding your details would help us process your order and notify you
+            about the invoice
           </div>
           <div className="col-md-1 col-2">
             <button
               type="button"
               className="close"
-              onClick={() => proceedFurther()}
+              onClick={() => closeRegistration()}
             >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
         </div>
         <div className="px-md-5">
-          {!register ? (
+          {login && (
             <>
               <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
@@ -90,7 +112,7 @@ class ModalForm extends Component {
                 Not a member yet?
                 <div
                   className="btn"
-                  onClick={() => this.setState({ register: true })}
+                  onClick={() => this.setState({ login: false, register: true })}
                 >
                   <strong style={{ textDecoration: "underline" }}>
                     Please Register
@@ -99,6 +121,7 @@ class ModalForm extends Component {
               </div>
               <div className="row mt-3 mb-5">
                 <button
+                  disabled={error}
                   type="button"
                   class="col-md-2 btn btn-primary mr-md-3 mb-md-0 mb-2"
                   onClick={this.handleLogin}
@@ -108,22 +131,26 @@ class ModalForm extends Component {
                 <button
                   type="button"
                   class="col-md-3 btn btn-secondary"
-                  onClick={() => proceedFurther()}
+                  onClick={() => closeRegistration()}
                 >
                   May be later
                 </button>
               </div>
             </>
-          ) : (
+          )}
+          {register && (
             <>
               <div class="form-group">
                 <label for="exampleInputName1">Name</label>
                 <br />
                 <Input
-                  type="email"
+                  name="name"
+                  value={name}
+                  onChange={this.changeField}
+                  type="text"
                   class="form-control"
                   id="exampleInputName1"
-                  aria-describedby="emailHelp"
+                  aria-describedby="nameHelp"
                   placeholder="Enter name"
                 />
               </div>
@@ -131,6 +158,9 @@ class ModalForm extends Component {
                 <label for="exampleInputMobile1">Mobile</label>
                 <br />
                 <Input
+                  name="mobile"
+                  value={mobile}
+                  onChange={this.changeField}
                   type="tel"
                   class="form-control"
                   id="exampleInputMobile1"
@@ -145,6 +175,9 @@ class ModalForm extends Component {
                 <label for="exampleInputEmail1">Email address</label>
                 <br />
                 <Input
+                  name="email"
+                  value={email}
+                  onChange={this.changeField}
                   type="email"
                   class="form-control"
                   id="exampleInputEmail1"
@@ -159,6 +192,9 @@ class ModalForm extends Component {
                 <label for="exampleInputPassword1">Password</label>
                 <br />
                 <Input
+                  name="password"
+                  value={password}
+                  onChange={this.changeField}
                   type="password"
                   class="form-control"
                   id="exampleInputPassword1"
@@ -169,7 +205,7 @@ class ModalForm extends Component {
                 Already registered?
                 <div
                   className="btn"
-                  onClick={() => this.setState({ register: false })}
+                  onClick={() => this.setState({ login: true, register: false })}
                 >
                   <strong style={{ textDecoration: "underline" }}>
                     Please sign in
@@ -178,15 +214,17 @@ class ModalForm extends Component {
               </div>
               <div className="row mt-3 mb-5">
                 <button
+                  disabled={error}
                   type="button"
                   class="col-md-2 btn btn-primary mr-md-3 mb-md-0 mb-2"
+                  onClick={this.handleRegister}
                 >
                   Register
                 </button>
                 <button
                   type="button"
                   class="col-md-3 btn btn-secondary"
-                  onClick={() => proceedFurther()}
+                  onClick={() => closeRegistration()}
                 >
                   May be later
                 </button>

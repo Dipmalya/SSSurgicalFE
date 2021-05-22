@@ -31,15 +31,6 @@ class Item extends Component {
     }
   };
 
-  buyNowHandler = (id) => {
-    const { isLoggedIn } = this.props;
-    if (isLoggedIn) {
-      this.props.buyNow(id, this.props.redirectUrl("/checkout"));
-    } else {
-      this.props.openRegistration(id);
-    }
-  };
-
   render() {
     const { selectedItem: item } = this.state;
     return (
@@ -47,7 +38,7 @@ class Item extends Component {
         <ItemTable
           {...item}
           addToCartHandler={this.addToCartHandler}
-          buyNowHandler={this.buyNowHandler}
+          buyNowHandler={this.addToCartHandler}
         />
         <div className="mt-5 mb-3 px-3">
           <h4>Disclaimer</h4>

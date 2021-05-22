@@ -1,6 +1,7 @@
 import axios from "axios";
 import { URL } from "../../config/endpoints";
 import {
+  FETCH_USER_SUCCESS,
   GET_CATORY_SUCCESS,
   GET_CATORY_FAILURE,
   LOGIN_SUCCESS,
@@ -8,7 +9,7 @@ import {
   LOGOUT
 } from "../../config/actionTypes";
 
-const { GET_CATEGORY_LIST, LOGIN_USER } = URL;
+const { GET_CATEGORY_LIST, LOGIN_USER, REGISTER_USER, FETCH_USER } = URL;
 
 export const getCategoryList = () => {
   return dispatch => {
@@ -56,4 +57,31 @@ const loginFailure = (payload) => ({
 export const logoutUser = () => ({
   type: LOGOUT,
   payload: {}
-})
+});
+
+export const registerUser = (registerObj, callback) => {
+  return () => {
+    axios
+      .post(REGISTER_USER, registerObj)
+      .then((res) => {
+        if (callback && res.data.success) {
+          callback();
+        }
+      })
+      .catch((res) => console.error(res));
+  };
+};
+
+export const fetchUser = userId => {
+  return dispatch => {
+    axios
+      .get(FETCH_USER + userId)
+      .then((res) => dispatch(fetUserSuccess(res.data)))
+      .catch((res) => console.error(res));
+  };
+};
+
+const fetUserSuccess = payload => ({
+  type: FETCH_USER_SUCCESS,
+  payload,
+});

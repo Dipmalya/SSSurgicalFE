@@ -9,5 +9,9 @@ export const URL = {
 
     SEND_EMAIL: `${BASE_URL}/user/send/email`,
 
-    LOGIN_USER: `${BASE_URL}/user/login`
+    LOGIN_USER: `${BASE_URL}/user/login`,
+    REGISTER_USER: `${BASE_URL}/user/register`,
+    FETCH_USER: `${BASE_URL}/user/`,
+
+    ORDER_ITEM: `${BASE_URL}/order/placeOrder`
 }

@@ -1,4 +1,5 @@
 import {
+  FETCH_USER_SUCCESS,
   GET_CATORY_SUCCESS,
   GET_CATORY_FAILURE,
   LOGIN_SUCCESS,
@@ -21,10 +22,9 @@ export const categoryList = (state = [], { type, payload }) => {
 };
 
 export const userData = (state = {}, { type, payload = {} }) => {
-  const { token, userDoc } = payload;
+  const { userDoc = {} } = payload;
   switch (type) {
     case LOGIN_SUCCESS: {
-      localStorage.setItem("token", token);
       localStorage.setItem("user", userDoc.userId);
       return userDoc;
     }
@@ -32,9 +32,11 @@ export const userData = (state = {}, { type, payload = {} }) => {
       return {};
     }
     case LOGOUT: {
-      localStorage.removeItem('token');
       localStorage.removeItem('user');
-      return {}
+      return {};
+    }
+    case FETCH_USER_SUCCESS: {
+      return payload;
     }
     default: {
       return state;

@@ -90,6 +90,7 @@ const QuoteForm = ({ url }) => {
 
           <div className="text-center">
             <input
+              disabled={name === '' || mobile === '' || query === ''}
               type="button"
               onClick={() => sendMail({ name, mobile, query })}
               value="Send us"

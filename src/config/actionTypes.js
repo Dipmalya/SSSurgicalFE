@@ -11,3 +11,5 @@ export const LOGOUT = 'LOGOUT';
 export const ADD_CART = 'ADD_CART';
 export const UPDATE_CART = 'UPDATE_CART';
 export const DELETE_CART_ITEM = 'DELETE_CART_ITEM';
+
+export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import moment from 'moment';
 import Layout from "../_helpers_/HOC/LayoutWrapper";
 import { ItemCard, Input } from "../_helpers_/views";
 
@@ -7,17 +8,47 @@ class Checkout extends Component {
     super(props);
     this.state = {
       products: [],
+      address: "",
+      pinCode: "",
+      error: true
     };
   }
 
-  static getDerivedStateFromProps({ cartItem }) {
+  static getDerivedStateFromProps({ cartItem, userData }, state) {
+    const { address, pinCode } = state;
+    const error = address === '' || pinCode === '';
     return {
       products: cartItem,
+      ...userData,
+      error
     };
+  }
+
+  changeAddress = event => this.setState({ address: event.target.value });
+
+  changeField = ({ name, value, error }) => {
+    this.setState({
+      [name]: value,
+      error,
+    });
+  };
+
+  handleOrder = () => {
+    const { products: items, name: buyerName, mobile, email, address, pinCode } = this.state;
+    const orderObj = {
+      items,
+      buyerName,
+      address,
+      pinCode,
+      mobile,
+      email,
+      orderDate: moment(new Date()).format('DDMMYYYY')
+    }
+    this.props.orderItem(orderObj, () => this.props.redirectUrl('/'));
   }
 
   render() {
-    const { products } = this.state;
+    const { products, name, mobile, email, address, pinCode, error } = this.state;
     return (
       <div className="mt-md-3 mt-lg-0 zIndex-1">
         <div className="d-flex">
@@ -60,9 +91,12 @@ class Checkout extends Component {
             </p>
             <div>
               <div className="form-group">
-                <label for="exampleInputEmail1">Name</label>
+                <label for="exampleInputName1">Name</label>
                 <Input
-                  type="email"
+                  name="name"
+                  value={name}
+                  type="text"
+                  onChange={this.changeField}
                   class="form-control"
                   id="exampleInputName1"
                   aria-describedby="emailHelp"
@@ -70,13 +104,17 @@ class Checkout extends Component {
                 />
               </div>
               <div className="form-group">
-                <label for="exampleInputEmail1">Mobile</label>
+                <label for="exampleInputMobile1">Mobile</label>
                 <Input
+                  name="mobile"
+                  value={mobile}
                   type="tel"
+                  onChange={this.changeField}
                   class="form-control"
                   id="exampleInputMobile1"
                   aria-describedby="emailHelp"
                   placeholder="Enter mobile"
+                  errorMessage="Please enter a valid 10 digit phone number"
                 />
                 <small id="emailHelp" className="form-text text-muted">
                   We won't bother you unless absolute necessary.
@@ -85,7 +123,10 @@ class Checkout extends Component {
               <div className="form-group">
                 <label for="exampleInputEmail1">Email address</label>
                 <Input
+                  name="email"
+                  value={email}
                   type="email"
+                  onChange={this.changeField}
                   class="form-control"
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
@@ -98,6 +139,9 @@ class Checkout extends Component {
               <div className="form-group">
                 <label for="exampleInputAddress1">Full Address</label>
                 <textarea
+                  name="address"
+                  value={address}
+                  onChange={this.changeAddress}
                   className="form-control"
                   placeholder="Your Full Address"
                   required
@@ -106,17 +150,24 @@ class Checkout extends Component {
               <div className="form-group">
                 <label for="exampleInputPincode1">Pin code</label>
                 <Input
+                  name="pinCode"
+                  value={pinCode}
                   type="text"
+                  pattern="[0-9]{6}"
+                  onChange={this.changeField}
                   class="form-control"
                   id="exampleInputpin1"
                   aria-describedby="pincodeHelp"
                   placeholder="Enter pin code"
+                  errorMessage="Please enter a valid pin code (eg: 712101)"
                 />
               </div>
               <div className="row my-4 pl-3">
                 <button
+                  disabled={error}
                   type="button"
                   className="col-md-4 btn btn-primary mr-md-3 mb-md-0 mb-2"
+                  onClick={this.handleOrder}
                 >
                   Send us your requirement
                 </button>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getCategoryList, loginUser, logoutUser } from "../../Home/action";
+import { getCategoryList, loginUser, registerUser, logoutUser, fetchUser } from "../../Home/action";
 import { addToCart } from "../../Item/action";
 import {
   getProductByCategory,
@@ -22,7 +22,9 @@ const mapStateToProps = (props) => ({
 const mapDispatchToProps = (dispatch) => ({
   getCategoryList: bindActionCreators(getCategoryList, dispatch),
   getProductByCategory: bindActionCreators(getProductByCategory, dispatch),
+  fetchUser: bindActionCreators(fetchUser, dispatch),
   loginUser: bindActionCreators(loginUser, dispatch),
+  registerUser: bindActionCreators(registerUser, dispatch),
   addToCart: bindActionCreators(addToCart, dispatch),
   logoutUser: bindActionCreators(logoutUser, dispatch),
   getProductBySubCategory: bindActionCreators(
@@ -43,7 +45,7 @@ export default (ChildComponent) => {
     }
 
     componentDidMount() {
-      const { categoryList, getCategoryList } = this.props;
+      const { categoryList, getCategoryList, fetchUser } = this.props;
       const userId = localStorage.getItem('user') || '';
       if (!categoryList.length) {
         getCategoryList();
@@ -56,9 +58,10 @@ export default (ChildComponent) => {
         "resize",
         this.setState({ showSideBar: window.innerWidth > 768 })
       );
-      this.setState({
-        isLoggedIn: userId ? true : false,
-      });
+      if (userId !== '') {
+        fetchUser(userId);
+        this.setState({ isLoggedIn: true });
+      }
     }
 
     toggleBar = () => {
@@ -78,6 +81,8 @@ export default (ChildComponent) => {
         behavior: "smooth",
       });
     };
+
+    closeRegistration = () => this.setState({ modalOpenned: false });
 
     handleCart = (id) => {
       const cartItem = this.props.viewProduct.find(
@@ -104,7 +109,7 @@ export default (ChildComponent) => {
     }
 
     render() {
-      const { categoryList = [], loginUser } = this.props;
+      const { categoryList = [], loginUser, registerUser } = this.props;
       const { showSideBar, isLoggedIn, modalOpenned } = this.state;
       return (
         <div>
@@ -136,9 +141,11 @@ export default (ChildComponent) => {
             {!isLoggedIn && modalOpenned && (
               <ModalForm
                 proceedFurther={this.proceedFurther}
+                onRegister={registerUser}
                 onLogin={loginUser}
                 itemId={this.props.history.location.pathname}
                 addToCart={this.handleCart}
+                closeRegistration={this.closeRegistration}
               />
             )}
             <ChildComponent
