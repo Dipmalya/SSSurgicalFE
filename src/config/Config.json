@@ -1,0 +1,42 @@
+{
+    "Home": {
+        "imageCarousel": [
+            {
+                "className": "carousel-item active",
+                "imageLink": "https://conductscience.com/wp-content/uploads/2019/05/SP0007-R_group.jpg",
+                "altText": "First Slide",
+                "imageHeading": "First Slide",
+                "imageSubHeading": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                "width": "98%",
+                "height": "450px"
+            },
+            {
+                "className": "carousel-item",
+                "imageLink": "https://www.medgadget.com/wp-content/uploads/2019/02/global-surgical-instruments-market-1024x578.jpg",
+                "altText": "Second Slide",
+                "imageHeading": "Second Slide",
+                "imageSubHeading": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                "width": "98%",
+                "height": "450px"
+            },
+            {
+                "className": "carousel-item",
+                "imageLink": "https://5.imimg.com/data5/IF/FB/NF/SELLER-78224736/6-500x500.jpg",
+                "altText": "Third Slide",
+                "imageHeading": "Third Slide",
+                "imageSubHeading": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                "width": "98%",
+                "height": "450px"
+            }
+        ]
+    },
+    "Product": {
+
+    },
+    "Item": {
+
+    },
+    "Checkout": {
+
+    }
+}

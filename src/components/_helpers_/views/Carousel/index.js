@@ -4,13 +4,14 @@ import styled from "styled-components";
 
 class Carousel extends Component {
   render() {
+    const { imageCarousel } = this.props;
     return (
       <div
         id="carouselExampleIndicators"
         className="carousel slide"
         data-ride="carousel"
       >
-        <ol className="carousel-indicators">
+        <ol className="carousel-indicators" style={{zIndex: 1}}>
           <li
             data-target="#carouselExampleIndicators"
             data-slide-to="0"
@@ -20,45 +21,21 @@ class Carousel extends Component {
           <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
         </ol>
         <div className="carousel-inner">
-          <div className="carousel-item active">
-            <img
-              className="d-block"
-              width="98%"
-              height="450px"
-              src="https://conductscience.com/wp-content/uploads/2019/05/SP0007-R_group.jpg"
-              alt="First slide"
-            />
-            <div className="carousel-caption d-none d-md-block">
-              <h5>First Slide</h5>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          {imageCarousel.map(data => (
+            <div className={data.className}>
+              <img
+                className="d-block"
+                width={data.width}
+                height={data.height}
+                src={data.imageLink}
+                alt={data.altText}
+              />
+              <div className="carousel-caption d-none d-md-block">
+                <h5>{data.imageHeading}</h5>
+                <p>{data.imageSubHeading}</p>
+              </div>
             </div>
-          </div>
-          <div className="carousel-item">
-            <img
-              className="d-block"
-              width="98%"
-              height="450px"
-              src="https://www.medgadget.com/wp-content/uploads/2019/02/global-surgical-instruments-market-1024x578.jpg"
-              alt="Second slide"
-            />
-            <div className="carousel-caption d-none d-md-block">
-              <h5>Second Slide</h5>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </div>
-          <div className="carousel-item">
-            <img
-              className="d-block"
-              width="98%"
-              height="450px"
-              src="https://5.imimg.com/data5/IF/FB/NF/SELLER-78224736/6-500x500.jpg"
-              alt="Third slide"
-            />
-            <div className="carousel-caption d-none d-md-block">
-              <h5>Third Slide</h5>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </div>
+          ))}
         </div>
         <a
           className="carousel-control-prev"
@@ -89,8 +66,12 @@ class Carousel extends Component {
   }
 }
 
-Carousel.defaultProps = {};
+Carousel.defaultProps = {
+  imageCarousel: []
+};
 
-Carousel.propTypes = {};
+Carousel.propTypes = {
+  imageCarousel: PropTypes.array
+};
 
 export default Carousel;

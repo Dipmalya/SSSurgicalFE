@@ -4,11 +4,16 @@ import Carousel from "../_helpers_/views/Carousel";
 import QuoteForm from "../_helpers_/views/helpers/QuoteForm";
 import { URL } from '../../config/endpoints';
 
+const { Home: data } = CONFIG;
+
 class Home extends Component {
   render() {
+    const {
+      imageCarousel = []
+    } = data;
     return (
       <div>
-        <Carousel />
+        <Carousel imageCarousel={imageCarousel} />
         <div className="my-5">
           <h4>Products</h4>
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis nulla

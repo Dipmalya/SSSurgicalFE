@@ -26,7 +26,6 @@ class Input extends Component {
   validate = () => {
     const { name, type, value, pattern = "" } = this.state;
     let error = false;
-    debugger;
     switch (type) {
       case "email": {
         /* eslint-disable */

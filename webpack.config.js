@@ -1,4 +1,8 @@
 const webpack = require("webpack");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const configData = require('./src/config/Config.json');
+
 module.exports = {
     "devServer": {
         "port": 5001,
@@ -22,8 +26,11 @@ module.exports = {
                 "use": ["eslint-loader"]
             },
             {
-                "test": /\.(css|scss)$/,
-                "loader": 'style-loader!css-loader!sass-loader'
+                "test": /\.css$/,
+                "use": [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader'
+                ],
             }
         ]
     },
@@ -40,6 +47,12 @@ module.exports = {
         "filename": "bundle.js"
     },
     "plugins": [
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.DefinePlugin({
+            CONFIG: JSON.stringify(configData)
+        }),
+        new webpack.HotModuleReplacementPlugin(),
+        new MiniCssExtractPlugin({
+            filename: 'main.css'
+        }),
     ]
 };
