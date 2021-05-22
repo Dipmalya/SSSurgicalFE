@@ -14,7 +14,7 @@ export const deleteItemFromCart = (id) => ({
   payload: id,
 });
 
-export const orderItem = orderObj => {
+export const orderItem = (orderObj, callback) => {
   return () => {
     axios
       .post(ORDER_ITEM, orderObj)
