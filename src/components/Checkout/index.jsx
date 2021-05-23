@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import moment from 'moment';
+import moment from "moment";
 import Layout from "../_helpers_/HOC/LayoutWrapper";
 import { ItemCard, Input } from "../_helpers_/views";
 
@@ -10,21 +10,21 @@ class Checkout extends Component {
       products: [],
       address: "",
       pinCode: "",
-      error: true
+      error: true,
     };
   }
 
   static getDerivedStateFromProps({ cartItem, userData }, state) {
     const { address, pinCode } = state;
-    const error = address === '' || pinCode === '';
+    const error = address === "" || pinCode === "";
     return {
       products: cartItem,
       ...userData,
-      error
+      error,
     };
   }
 
-  changeAddress = event => this.setState({ address: event.target.value });
+  changeAddress = (event) => this.setState({ address: event.target.value });
 
   changeField = ({ name, value, error }) => {
     this.setState({
@@ -34,21 +34,46 @@ class Checkout extends Component {
   };
 
   handleOrder = () => {
-    const { products: items, name: buyerName, mobile, email, address, pinCode } = this.state;
-    const orderObj = {
-      items,
-      buyerName,
+    const {
+      products: items,
+      userName, name,
+      userMobile, mobile,
+      userEmail, email,
       address,
       pinCode,
-      mobile,
-      email,
-      orderDate: moment(new Date()).format('DDMMYYYY')
-    }
-    this.props.orderItem(orderObj, () => this.props.redirectUrl('/'));
-  }
+    } = this.state;
+    const orderObj = {
+      items,
+      buyerName: userName ? userName : name,
+      address,
+      pinCode,
+      mobile: userMobile ? userMobile : mobile,
+      email: userEmail ? userEmail : email,
+      orderDate: moment(new Date()).format("DDMMYYYY"),
+    };
+    this.props.orderItem(orderObj, this.postOrderCallback);
+  };
+
+  postOrderCallback = () => {
+    this.props.emptyCart();
+    this.props.displayAlert(
+      `Thank you for choosing us!! 
+      We have received your order and will reach back to you 
+      at the eraliest with invoice and order details.`,
+      () => this.props.redirectUrl("/")
+    );
+  };
 
   render() {
-    const { products, name, mobile, email, address, pinCode, error } = this.state;
+    const {
+      products,
+      name,
+      mobile,
+      email,
+      address,
+      pinCode,
+      error,
+    } = this.state;
     return (
       <div className="mt-md-3 mt-lg-0 zIndex-1">
         <div className="d-flex">
@@ -93,7 +118,7 @@ class Checkout extends Component {
               <div className="form-group">
                 <label for="exampleInputName1">Name</label>
                 <Input
-                  name="name"
+                  name="userName"
                   value={name}
                   type="text"
                   onChange={this.changeField}
@@ -106,7 +131,7 @@ class Checkout extends Component {
               <div className="form-group">
                 <label for="exampleInputMobile1">Mobile</label>
                 <Input
-                  name="mobile"
+                  name="userMobile"
                   value={mobile}
                   type="tel"
                   onChange={this.changeField}
@@ -123,7 +148,7 @@ class Checkout extends Component {
               <div className="form-group">
                 <label for="exampleInputEmail1">Email address</label>
                 <Input
-                  name="email"
+                  name="userEmail"
                   value={email}
                   type="email"
                   onChange={this.changeField}

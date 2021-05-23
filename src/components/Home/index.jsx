@@ -34,7 +34,7 @@ class Home extends Component {
           incidunt consequatur aut magni fuga numquam sunt dolores,
           necessitatibus provident rem voluptas soluta laborum repellat ut.
           <div className="my-3 mr-3">
-            <QuoteForm url={URL} />
+            <QuoteForm url={URL} displayAlert={this.props.displayAlert} />
           </div>
         </div>
       </div>

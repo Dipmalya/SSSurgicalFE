@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getCategoryList, loginUser, registerUser, logoutUser, fetchUser } from "../../Home/action";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { getCategoryList, loginUser, registerUser, logoutUser, fetchUser, removeError } from "../../Home/action";
 import { addToCart } from "../../Item/action";
 import {
   getProductByCategory,
@@ -27,6 +29,7 @@ const mapDispatchToProps = (dispatch) => ({
   registerUser: bindActionCreators(registerUser, dispatch),
   addToCart: bindActionCreators(addToCart, dispatch),
   logoutUser: bindActionCreators(logoutUser, dispatch),
+  removeError: bindActionCreators(removeError, dispatch),
   getProductBySubCategory: bindActionCreators(
     getProductBySubCategory,
     dispatch
@@ -108,8 +111,10 @@ export default (ChildComponent) => {
       window.location.reload();
     }
 
+    displayAlert = (body, callback) => toast.info(body, { onClose: callback });
+
     render() {
-      const { categoryList = [], loginUser, registerUser } = this.props;
+      const { categoryList = [], loginUser, registerUser, errorMessage } = this.props;
       const { showSideBar, isLoggedIn, modalOpenned } = this.state;
       return (
         <div>
@@ -138,20 +143,32 @@ export default (ChildComponent) => {
               showSideBar ? { marginLeft: "22.5%" } : { marginLeft: "2.5%" }
             }
           >
+            <ToastContainer
+              bodyClassName="toastBody"
+              position="top-center"
+              autoClose={3500}
+              closeOnClick
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
             {!isLoggedIn && modalOpenned && (
               <ModalForm
+                errorMessage={errorMessage}
                 proceedFurther={this.proceedFurther}
                 onRegister={registerUser}
                 onLogin={loginUser}
                 itemId={this.props.history.location.pathname}
                 addToCart={this.handleCart}
                 closeRegistration={this.closeRegistration}
+                removeError={this.props.removeError}
               />
             )}
             <ChildComponent
               {...this.props}
               redirectUrl={this.redirectUrl}
               isLoggedIn={isLoggedIn}
+              displayAlert={this.displayAlert}
               openRegistration={this.openRegistration}
             />
           </MainContainer>

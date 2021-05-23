@@ -6,7 +6,9 @@ import {
   GET_CATORY_FAILURE,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
-  LOGOUT
+  REGISTRATION_FAILURE,
+  LOGOUT,
+  REMOVE_ERROR
 } from "../../config/actionTypes";
 
 const { GET_CATEGORY_LIST, LOGIN_USER, REGISTER_USER, FETCH_USER } = URL;
@@ -40,7 +42,7 @@ export const loginUser = (loginObj, callback) => {
           callback();
         }
       })
-      .catch((res) => dispatch(loginFailure(res.data)));
+      .catch(() => dispatch(loginFailure()));
   };
 }
 
@@ -49,9 +51,9 @@ const loginSuccess = (payload) => ({
   payload,
 });
 
-const loginFailure = (payload) => ({
+const loginFailure = () => ({
   type: LOGIN_FAILURE,
-  payload,
+  payload: "Username or Password is invalid",
 });
 
 export const logoutUser = () => ({
@@ -60,7 +62,7 @@ export const logoutUser = () => ({
 });
 
 export const registerUser = (registerObj, callback) => {
-  return () => {
+  return dispatch => {
     axios
       .post(REGISTER_USER, registerObj)
       .then((res) => {
@@ -68,7 +70,7 @@ export const registerUser = (registerObj, callback) => {
           callback();
         }
       })
-      .catch((res) => console.error(res));
+      .catch(() => dispatch({ type: REGISTRATION_FAILURE, payload: 'Unable to register user' }));
   };
 };
 
@@ -85,3 +87,7 @@ const fetUserSuccess = payload => ({
   type: FETCH_USER_SUCCESS,
   payload,
 });
+
+export const removeError = () => ({
+  type: REMOVE_ERROR
+})

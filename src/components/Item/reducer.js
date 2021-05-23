@@ -1,4 +1,4 @@
-import { ADD_CART, UPDATE_CART, DELETE_CART_ITEM } from "../../config/actionTypes";
+import { ADD_CART, UPDATE_CART, DELETE_CART_ITEM, EMPTY_CART } from "../../config/actionTypes";
 
 export const cartItem = (state = [], { type, payload }) => {
   switch (type) {
@@ -26,6 +26,8 @@ export const cartItem = (state = [], { type, payload }) => {
     case DELETE_CART_ITEM: {
       return state.filter(data => data.itemId !== payload);
     }
+    case EMPTY_CART:
+      return [];
     default: {
       return state;
     }

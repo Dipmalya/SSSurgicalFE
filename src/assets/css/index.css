@@ -1,27 +1,47 @@
 body {
-    background-color: #F2F2F2;
+  background-color: #f2f2f2;
 }
 
 .zIndex-1 {
-    z-index: -1;
+  z-index: -1;
 }
 
 .puck-heading {
-    text-decoration: underline;
-    text-underline-position: under;
-    text-decoration-color: #082b4f;
-    padding-bottom: 2px;
+  text-decoration: underline;
+  text-underline-position: under;
+  text-decoration-color: #082b4f;
+  padding-bottom: 2px;
 }
 
 .home-icon {
-    font-size: 20px;
-    right: 0;
-    background-color: #E6E1E1;
-    padding: 3px 7px;
-    margin-right: 15px;
-    position: absolute;
+  font-size: 20px;
+  right: 0;
+  background-color: #e6e1e1;
+  padding: 3px 7px;
+  margin-right: 15px;
+  position: absolute;
 }
 
 .home-icon:hover {
-    background-color: #c7c4c4;
+  background-color: #c7c4c4;
+}
+
+.Toastify__toast--info {
+  background: #e6e1e1 !important;
+}
+
+.Toastify__close-button {
+  color: black !important;
+}
+
+.Toastify__toast-container {
+    text-align: center !important;
+    margin-top: 2.4rem !important;
+    width: 50vw !important;
+}
+
+.toastBody {
+  background-color: #e6e1e1;
+  color: #10171d; /* #10171D */
+  font-size: 1rem !important;
 }

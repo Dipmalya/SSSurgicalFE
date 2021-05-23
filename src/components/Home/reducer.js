@@ -4,7 +4,8 @@ import {
   GET_CATORY_FAILURE,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
-  LOGOUT
+  LOGOUT,
+  REMOVE_ERROR
 } from "../../config/actionTypes";
 
 export const categoryList = (state = [], { type, payload }) => {
@@ -43,3 +44,13 @@ export const userData = (state = {}, { type, payload = {} }) => {
     }
   }
 };
+
+export const errorMessage = (state = '', { type, payload = {} }) => {
+  if (type.endsWith("FAILURE")) {
+    return payload
+  }
+  if (type === REMOVE_ERROR) {
+    return ''
+  }
+  return '';
+}

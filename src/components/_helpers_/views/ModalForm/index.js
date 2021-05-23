@@ -16,13 +16,17 @@ class ModalForm extends Component {
     };
   }
 
-  static getDerivedStateFromProps(props, state) {
+  static getDerivedStateFromProps({ errorMessage }, state) {
     const { login, register, email, password, name } = state;
     if (login) {
-      return { error: email === '' || password === '' };
+      return { error: email === "" || password === "", errorMessage };
     }
     if (register) {
-      return { error: email === '' || password === '' || name === '' || password === '' };
+      return {
+        error:
+          email === "" || password === "" || name === "" || password === "",
+        errorMessage
+      };
     }
   }
 
@@ -53,7 +57,16 @@ class ModalForm extends Component {
   };
 
   render() {
-    const { login, register, email, password, name, mobile, error } = this.state;
+    const {
+      login,
+      register,
+      email,
+      password,
+      name,
+      mobile,
+      error,
+      errorMessage
+    } = this.state;
     const { closeRegistration } = this.props;
     return (
       <div className="my-md-3 mt-lg-0 mr-3 px-3">
@@ -75,6 +88,18 @@ class ModalForm extends Component {
             </button>
           </div>
         </div>
+        {errorMessage && (
+          <div className="alert alert-danger text-center">
+            {errorMessage}
+            <button
+              type="button"
+              className="close float-right"
+              onClick={() => this.props.removeError()}
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        )}
         <div className="px-md-5">
           {login && (
             <>
@@ -112,7 +137,10 @@ class ModalForm extends Component {
                 Not a member yet?
                 <div
                   className="btn"
-                  onClick={() => this.setState({ login: false, register: true })}
+                  onClick={() => {
+                    this.setState({ login: false, register: true });
+                    this.props.removeError();
+                  }}
                 >
                   <strong style={{ textDecoration: "underline" }}>
                     Please Register
@@ -205,7 +233,10 @@ class ModalForm extends Component {
                 Already registered?
                 <div
                   className="btn"
-                  onClick={() => this.setState({ login: true, register: false })}
+                  onClick={() => {
+                    this.setState({ login: true, register: false });
+                    this.props.removeError();
+                  }}
                 >
                   <strong style={{ textDecoration: "underline" }}>
                     Please sign in

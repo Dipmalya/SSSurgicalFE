@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const QuoteForm = ({ url }) => {
+const QuoteForm = ({ url, displayAlert }) => {
   const { SEND_EMAIL } = url;
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
@@ -15,7 +15,7 @@ const QuoteForm = ({ url }) => {
           setName("");
           setMobile("");
           setQuery("");
-          alert(
+          displayAlert(
             "We have received your query, we will get back to you shortly!!"
           );
         }
